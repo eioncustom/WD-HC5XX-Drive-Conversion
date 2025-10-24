@@ -1,10 +1,13 @@
 # Western Digital (WD) HC5XX 512e Drive Conversion to 4Kn for Utilization in DDN EXASCALER Appliances
 [Automation Scripts](#automating-and-performing-changes-to-multiple-drives)
+> I wrote all these scripts to automate the re-shaping of the drive sectors from 512e to 4Kn.
+
+<ins>***This WILL NOT work on 512n drives and WD is very clear about this in their documentation.***</ins>
 
 ## Background / My Story  
 I support several HPC Cluster that utilize LustreFS as our hot storage. Over the years, we finally had Data Direct Networks (DDN, Inc.) Exascaler appliance that were no long part of a support contract. Of course it was a matter of time before we had spinning disc drive failures.  
 
-I reached out DDN for a quote for replacement drives and wasn't super happy with the prices. They do come with the drive carriers, but since I may have to move the appliances from one location to another at some point, I have always swapped the drive carrier anyways. Mark me, *not sold*. 
+I reached out DDN for a quote for replacement drives and wasn't super happy with the prices. They do come with the drive carriers, but since I may have to move the appliances from one location to another at some point, I have always swapped the drive carrier anyways. Mark me, *not sold*. I still do recommend getting the drives from DDN as they do some with validated firmware that is guarenteed to work with your appliace. This process is my work around for budget constraints.
 
 Instead of purchasing from DDN I went out shopping and found a good price on a case of 14TiB WD HC550 drives, the appliance was shipped with WD HC530 14TiB 4Kn drives. The assumption is that the HC550s should function the same as the HC530 drives. Upon arrival of the case of drives, WD in their infinite wisdom shipped all the drives with the geometry set to 512Kn.  
 
@@ -22,6 +25,7 @@ Now with utility. drives, and a spare server with a SAS Contoller in it... It wa
 
 WDCKIT has lots of useful commands to tinker with your drives, be careful as there are many commands that can break your drive.  
 -->  **USE AT YOUR OWN RISK**  <--
+
 
 For these HC5xx drives you don't need much. If you want to do this manually, you will need to:
 1) Install the correct package for your OS, I am using Ubuntu 22.04 LTS at this point and all the scripts are written around BASH. Powershell peeps, you're on your own. (But the wdckit command should be the same)
@@ -125,5 +129,70 @@ I have spent some time building out a few scripts that can help make your life m
 2) [Manually Triggered Bash Script to Find all Specific Drives of a Given Model w/logging](https://github.com/eioncustom/WD-HC5XX-Drive-Conversion/blob/2dfba079d5a1b863251e877afb026381aa9e20fb/loop_with_log.sh)
 3) [Automated to sit in rc.local](https://github.com/eioncustom/WD-HC5XX-Drive-Conversion/blob/2012d2032cca1c8be8f04f9ccd03f2693adab053/rc.local.format.sh)
 
+# hdparm Peculiarities
+During all my research in to these drives, I was checking on them with ``hdparm``. There is a really good write up about it on [Arch Linux's Wiki](https://wiki.archlinux.org/title/Advanced_Format#Advanced_Format_hard_disk_drives).  
 
-I wrote all these scripts to automate the re-shaping of the drive sectors from 512e to 4Kn. This WILL NOT work on 512n drives and WD is very clear about this in their documentation. 
+When I was checking them pre-change, it was reporting 512, and not showing the additiional modes as noted in Arch's Wiki. The logical size is always 512, never changing. Even post configuration change with wdckit hdparm 
+```CLI
+root@ddn-converter:/home/core# hdparm -I /dev/sdb
+
+/dev/sdb:
+
+ATA device, with non-removable media
+Standards:
+        Likely used: 1
+Configuration:
+        Logical         max     current
+        cylinders       0       0
+        heads           0       0
+        sectors/track   0       0
+        --
+        **Logical/Physical Sector size:           512 bytes**
+        device size with M = 1024*1024:           0 MBytes
+        device size with M = 1000*1000:           0 MBytes
+        cache/buffer size  = unknown
+Capabilities:
+        IORDY not likely
+        Cannot perform double-word IO
+        R/W multiple sector transfer: not supported
+        DMA: not supported
+        PIO: pio0
+
+root@ddn-converter:/home/core# wdckit show --geometry /dev/sdb
+wdckit Version 3.2.0.0 [x86_64 build]
+Copyright (C) 2019-2025 Western Digital Technologies, Inc.
+Western Digital ATA/SCSI command line utility.
+10/24/2025 22:33:07.848
+
+Device    Block Size  Max LBA     Size     Boot Device
+--------  ----------  ----------  -------  -----------
+/dev/sdb  4096 Bytes  3418095615  14.0 TB  No
+```
+> The data for these drives can not be trusted from hdparm
+  
+When the drive is placed in to a DDN Appliance it is read correctly and reports a 4Kn allowing you to finally format the drive to your correct file system.  
+
+```CLUI
+****************************
+*     Physical Disk(s)     *
+****************************
+
+
+Enclosure|                                       |S|                                                  |Health |                              |Block|
+Idx |Pos |Slot| Vendor |     Product ID     |Type|E|Capacity  | RPM|Revision|    Serial Number   |Pool| State | Idx |State |       WWN       |Size |
+----------------------------------------------------------------------------------------------------------------------------------------------------
+   3    3   63 WDC      WUH721814AL5204       SAS          0 B 7.2K C8C2     6JG4H34T             UNAS FRMTING    73 READY   5000cca40e0828b0   4k 
+----------------------------------------------------------------------------------------------------------------------------------------------------
+    |  NUM| Vendor |     Product ID     |Type|Capacity  | RPM|Revision|Block Size|
+----------------------------------------------------------------------------------------------------------------------------------------------------
+Found:   1 WDC      WUH721814AL5204       SAS        0 B 7.2K C8C2     4k  
+
+Number of distinguished models:  1
+
+Total Physical Disks:                          1
+Total Assigned Disks:                          0
+Total Unassigned Disks:                        1
+  Total SAS Disks:                             1
+```
+
+
