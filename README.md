@@ -1,4 +1,5 @@
 # Western Digital (WD) HC5XX 512e Drive Conversion to 4Kn for utilization in DDN EXASCALER Appliances
+[Automation Scripts](#automating-and-performing-changes-to-multiple-drives)
 
 ## Background / My Story  
 I support several HPC Cluster that utilize LustreFS as our hot storage. Over the years, we finally had Data Direct Networks (DDN, Inc.) Exascaler appliance that were no long part of a support contract. Of course it was a matter of time before we had spinning disc drive failures.  
@@ -43,7 +44,7 @@ DUT  Device    Port  Capacity       State          BootDevice  Serial Number    
 5    /dev/sg0  SCSI  unretrievable  unretrievable  No          PDNLH0BRH8W4S8        P440ar           7.00      unretrievable/unretrievable
 6    /dev/sg5  SCSI  unretrievable  unretrievable  No          PDNLH0BRH8W4S8        P440ar           7.00      unretrievable/unretrievable
 ```
-Here we can see all the drive and the Device IDs, we will need the Device ID and the Serial Numbers of the drive(s) you wish to modify.
+> Here we can see all the drive and the Device IDs, we will need the Device ID and the Serial Numbers of the drive(s) you wish to modify.
 
 4) To check the current geometry of a specfic drive, run ```wdckit show --geometry```  
 
@@ -64,7 +65,7 @@ Device    Block Size     Max LBA        Size           Boot Device
 /dev/sg0  unretrievable  unretrievable  unretrievable  No
 /dev/sg5  unretrievable  unretrievable  unretrievable  No
 ```  
-Observe in the verison of wdckit I am using the relevate information is found in the second coloumn. 
+> Observe in the verison of wdckit I am using the relevate information is found in the second coloumn. 
 
 6) Time to format, you will need to run this command; ```wdckit format --serial SERIAL -b 4096 --fastformat```
 ```CLI
@@ -91,7 +92,7 @@ Progress: 100%
 Success: Format completed on: 6JG4DWUT
 /dev/sdc: Success
 ```
-Depending on the size of your drive this can take minutes to complete.
+> Depending on the size of your drive this can take minutes to complete.
 
 8) Now you can verify the drive(s) that you selected have been reshaped.
 ```
@@ -111,7 +112,7 @@ Device    Block Size     Max LBA        Size           Boot Device
 /dev/sg0  unretrievable  unretrievable  unretrievable  No
 /dev/sg5  unretrievable  unretrievable  unretrievable  No
 ```
-As you can see I have done one drive and it showing the correct geometry for a 4Kn drive.
+> As you can see I have done one drive and it showing the correct geometry for a 4Kn drive.
 
 9) Now you can place this drive in your DDN Appliance and format the drive from there to match the rest of the drives in that storage pool.
     *If you're not putting this in a DDN Appliance, you're just ready to create the file system on top that you would like.*
