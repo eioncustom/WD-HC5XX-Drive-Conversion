@@ -1,6 +1,6 @@
 # Western Digital (WD) HC5XX 512e Drive Conversion to 4Kn for Utilization in DDN EXASCALER Appliances
-[Automation Scripts](#automating-and-performing-changes-to-multiple-drives)
-[hdparm Peculiarities](#hdparm-peculiarities)
+[Automation Scripts](#automating-and-performing-changes-to-multiple-drives)  
+[hdparm Peculiarities](#hdparm-peculiarities)  
 > I wrote all these scripts to automate the re-shaping of the drive sectors from 512e to 4Kn.
 
 <ins>***This WILL NOT work on 512n drives and WD is very clear about this in their documentation.***</ins>
