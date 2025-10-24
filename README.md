@@ -1,4 +1,4 @@
-# Western Digital (WD) HC5XX 512e Drive Conversion to 4Kn for utilization in DDN EXASCALER Appliances
+# Western Digital (WD) HC5XX 512e Drive Conversion to 4Kn for Utilization in DDN EXASCALER Appliances
 [Automation Scripts](#automating-and-performing-changes-to-multiple-drives)
 
 ## Background / My Story  
