@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#-- Logging location can be set to whereever you would like.
+#-- Logging location can be set to wherever you would like.
 LOGFILE="/var/log/ddn_format.log"
 SHUTDOWN_FLAG=0
 
@@ -55,16 +55,33 @@ for dev in $WUH_DRIVES; do
     echo "[$(date '+%F %T')] Formatting $dev (Serial: $SERIAL)..." | tee -a "$LOGFILE"
     echo "[$(date '+%F %T')] Running: wdckit format --serial $SERIAL -b 4096 --fastformat" | tee -a "$LOGFILE"
 
-    #-- Comment/Uncomment this to actually perform/not perform the format:
-    wdckit format --serial "$SERIAL" -b 4096 --fastformat | tee -a "$LOGFILE"
+    #-- Start the format and wait for it to complete by polling Block Size
+    echo "[$(date '+%F %T')] Starting format..." | tee -a "$LOGFILE"
+    wdckit format --serial "$SERIAL" -b 4096 --fastformat --danger-zone| tee -a "$LOGFILE"
 
-    #-- Mark that we formatted at least one drive
-    SHUTDOWN_FLAG=1
+    # Poll every 5 seconds until Block Size reads 4096
+    echo "[$(date '+%F %T')] Waiting for $dev to complete format (target: 4096 Bytes)..." | tee -a "$LOGFILE"
+    for i in {1..24}; do  # ~2 minutes max wait
+        NEW_GEOMETRY=$(wdckit show "$dev" --geometry 2>/dev/null)
+        NEW_BLOCK_SIZE=$(echo "$NEW_GEOMETRY" | awk -v dev="$dev" '$1 == dev {print $2}' | grep -o '[0-9]\+')
+
+        if [ "$NEW_BLOCK_SIZE" = "4096" ]; then
+            echo "[$(date '+%F %T')] $dev successfully formatted to 4096 Bytes." | tee -a "$LOGFILE"
+            SHUTDOWN_FLAG=1
+            break
+        fi
+        sleep 5
+    done
+
+    if [ "$NEW_BLOCK_SIZE" != "4096" ]; then
+        echo "[$(date '+%F %T')] WARNING: $dev format did not reach 4096 Bytes after timeout." | tee -a "$LOGFILE"
+    fi
 done
 
-# Decision: shutdown or not
+#-- Decision: shutdown or not
 if [ "$SHUTDOWN_FLAG" -eq 1 ]; then
     echo "[$(date '+%F %T')] Formatting completed on one or more drives. Shutting down system..." | tee -a "$LOGFILE"
+    sleep 10
     shutdown -h now
 else
     echo "[$(date '+%F %T')] No 512-byte WUH drives found. System will not shut down." | tee -a "$LOGFILE"
