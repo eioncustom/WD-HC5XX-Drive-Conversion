@@ -56,7 +56,7 @@ DUT  Device    Port  Capacity       State          BootDevice  Serial Number    
 4) To check the current geometry of a specfic drive, run ```wdckit show --geometry```  
 
 ```CLI
-root@ddn-converter:/home/core# wdckit show --geometry
+root@ddn-converter:/home/user# wdckit show --geometry
 wdckit Version 3.2.0.0 [x86_64 build]
 Copyright (C) 2019-2025 Western Digital Technologies, Inc.
 Western Digital ATA/SCSI command line utility.
@@ -76,7 +76,7 @@ Device    Block Size     Max LBA        Size           Boot Device
 
 6) Time to format, you will need to run this command; ```wdckit format --serial SERIAL -b 4096 --fastformat```
 ```CLI
-root@ddn-converter:/home/core# wdckit format --serial 6JG4DWUT -b 4096 --fastformat
+root@ddn-converter:/home/user# wdckit format --serial 6JG4DWUT -b 4096 --fastformat
 wdckit Version 3.2.0.0 [x86_64 build]
 Copyright (C) 2019-2025 Western Digital Technologies, Inc.
 Western Digital ATA/SCSI command line utility.
@@ -103,7 +103,7 @@ Success: Format completed on: 6JG4DWUT
 
 8) Now you can verify the drive(s) that you selected have been reshaped.
 ```
-root@ddn-converter:/home/core# wdckit show --geometry
+root@ddn-converter:/home/user# wdckit show --geometry
 wdckit Version 3.2.0.0 [x86_64 build]
 Copyright (C) 2019-2025 Western Digital Technologies, Inc.
 Western Digital ATA/SCSI command line utility.
@@ -137,7 +137,7 @@ During all my research in to these drives, I was checking on them with ``hdparm`
 
 When I was checking them pre-change, it was reporting 512, and not showing the additiional modes as noted in Arch's Wiki. The logical size is always 512, never changing. Even post configuration change with wdckit hdparm 
 ```CLI
-root@ddn-converter:/home/core# hdparm -I /dev/sdb
+root@ddn-converter:/home/user# hdparm -I /dev/sdb
 
 /dev/sdb:
 
@@ -161,7 +161,7 @@ Capabilities:
         DMA: not supported
         PIO: pio0
 
-root@ddn-converter:/home/core# wdckit show --geometry /dev/sdb
+root@ddn-converter:/home/user# wdckit show --geometry /dev/sdb
 wdckit Version 3.2.0.0 [x86_64 build]
 Copyright (C) 2019-2025 Western Digital Technologies, Inc.
 Western Digital ATA/SCSI command line utility.
