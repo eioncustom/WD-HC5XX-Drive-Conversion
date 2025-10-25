@@ -1,5 +1,6 @@
 #!/bin/bash
 LOGFILE="/var/log/ddn_format.log"
+#-- Adjust the MODEL to match your drives.
 MODEL="WUH721814AL5204"
 
 echo "[$(date '+%F %T')] Starting WD format check..." | tee -a "$LOGFILE"
