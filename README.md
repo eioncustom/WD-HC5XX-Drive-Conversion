@@ -22,7 +22,8 @@ After I had already opened a support case with Western Digital, they told me the
 
 There is two ways to get wdckit:
 1) From Western Digital, **(Disaclamer: NO COMMAND SUPPORT FROM TECHNICAL SUPPORT)**
-2) From storage nerds like myself that crowd source utilities like [HDD Gurus](https://files.hddguru.com/download/Software/Western%20Digital/)
+   > Western Digital provided me with v3.2.0.0 [Linux](https://downloads.wdc.com/wdapp/wdckit_lin.zip) & [Windows](https://downloads.wdc.com/wdapp/wdckit_win.zip)
+3) From storage nerds like myself that crowd source utilities like [HDD Gurus](https://files.hddguru.com/download/Software/Western%20Digital/)
 
 Now with utility. drives, and a spare server with a SAS Contoller in it... It was time to figure out this utility and test in the DDN Appliance once complete.
 
