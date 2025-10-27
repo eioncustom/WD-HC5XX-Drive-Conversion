@@ -26,7 +26,7 @@ There is two ways to get wdckit:
    > [Documentation from Western Digitial](https://support-en.wd.com/app/answers/detailweb/a_id/50708/~/wdckit-drive-utility-download-and-instructions-for-internal-drives)  
 3) From storage nerds like myself that crowd source utilities like [HDD Gurus](https://files.hddguru.com/download/Software/Western%20Digital/)
 
-Now with utility. drives, and a spare server with a SAS Contoller in it... It was time to figure out this utility and test in the DDN Appliance once complete.
+Now with the utility software, drives, and a spare server with a SAS Contoller in it... It was time to figure out this utility and test in the DDN Appliance once complete.
 
 WDCKIT has lots of useful commands to tinker with your drives, be careful as there are many commands that can break your drive.  
 -->  **USE AT YOUR OWN RISK**  <--
