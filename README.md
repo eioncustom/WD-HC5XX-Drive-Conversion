@@ -45,9 +45,9 @@ Western Digital ATA/SCSI command line utility.
 DUT  Device    Port  Capacity       State          BootDevice  Serial Number         Model Number     Firmware  Lnk Spd Cap/Cur
 ---  --------  ----  -------------  -------------  ----------  --------------------  ---------------  --------  ---------------------------
 0    /dev/sda  SAS   2.00 TB        Good           Yes         Z1X1MMC00000C425CL55  MB2000FCWDF      HPD5      Gen3,Gen3/Gen3,unknown
-1    /dev/sdb  SAS   14.0 TB        Good           No          6JG467AT              WUH721814AL5204  C8C2      Gen4,Gen4/Gen4,unknown
-2    /dev/sdc  SAS   14.0 TB        Good           No          6JG4DWUT              WUH721814AL5204  C8C2      Gen4,Gen4/Gen4,unknown
-3    /dev/sdd  SAS   14.0 TB        Good           No          6JG4DXET              WUH721814AL5204  C8C2      Gen4,Gen4/Gen4,unknown
+1    /dev/sdb  SAS   14.0 TB        Good           No          ZJG467AT              WUH721814AL5204  C8C2      Gen4,Gen4/Gen4,unknown
+2    /dev/sdc  SAS   14.0 TB        Good           No          ZJG4DWUT              WUH721814AL5204  C8C2      Gen4,Gen4/Gen4,unknown
+3    /dev/sdd  SAS   14.0 TB        Good           No          ZJG4DXET              WUH721814AL5204  C8C2      Gen4,Gen4/Gen4,unknown
 4    /dev/sde  SCSI  unretrievable  unretrievable  No                                LUN 00 Media 0   2.10      unretrievable/unretrievable
 5    /dev/sg0  SCSI  unretrievable  unretrievable  No          PDNLH0BRH8W4S8        P440ar           7.00      unretrievable/unretrievable
 6    /dev/sg5  SCSI  unretrievable  unretrievable  No          PDNLH0BRH8W4S8        P440ar           7.00      unretrievable/unretrievable
@@ -185,7 +185,7 @@ When the drive is placed in to a DDN Appliance it is read correctly and reports 
 Enclosure|                                       |S|                                                  |Health |                              |Block|
 Idx |Pos |Slot| Vendor |     Product ID     |Type|E|Capacity  | RPM|Revision|    Serial Number   |Pool| State | Idx |State |       WWN       |Size |
 ----------------------------------------------------------------------------------------------------------------------------------------------------
-   3    3   63 WDC      WUH721814AL5204       SAS          0 B 7.2K C8C2     6JG4H34T             UNAS FRMTING    73 READY   5000cca40e0828b0   4k 
+   3    3   63 WDC      WUH721814AL5204       SAS          0 B 7.2K C8C2     ZJG4H34T             UNAS FRMTING    73 READY   5000cca40e0828b0   4k 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
     |  NUM| Vendor |     Product ID     |Type|Capacity  | RPM|Revision|Block Size|
 ----------------------------------------------------------------------------------------------------------------------------------------------------
