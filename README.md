@@ -124,6 +124,7 @@ Device    Block Size     Max LBA        Size           Boot Device
 > As you can see I have done one drive and it showing the correct geometry for a 4Kn drive.
 
 9) Now you can place this drive in your DDN Appliance and format the drive from there to match the rest of the drives in that storage pool.
+    --> DO NOT, I REPEAT DO NOT, ADD THE DRIVE TO A STORAGE POOL PRIOR TO THE FORMAT COMPLETING, IT WILL REPORT AS FAILED REGARDLESS OF SUCCESSFUL COPYBACK. <--  
     *If you're not putting this in a DDN Appliance, you're just ready to create the file system on top that you would like.*
 
 # Automating and Performing Changes to Multiple Drives  
